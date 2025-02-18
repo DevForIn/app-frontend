@@ -1,23 +1,34 @@
+
+// image import 
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  let posts = '일찍 퇴근하기';
+  let tests = { color : 'blue', fontSize : '50px' } ;
+  let bn = 'black-nav';
+  function 함수(){
+    return 100
+  }
   return (
+    
+    // React -> 데이터 바인딩이 쉬움
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='black-nav'>
+        asf
+      </div>
+      <div className={ bn }>
+        <div style={ { color : 'red', fontSize : '30px' } }>s
+          Nav Bar
+        </div>
+        <div style={tests}>
+          ggg
+        </div>
+      </div>
+      <h4>{ posts }</h4>
+      <h4>{ 함수() }</h4>
+      <img src ={ logo }/>
     </div>
   );
 }

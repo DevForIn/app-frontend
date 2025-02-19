@@ -20,7 +20,7 @@ function App() {
       </div>
       <div className={ bn }>
         <div style={ { color : 'red', fontSize : '30px' } }>s
-          Nav Bar
+        실패야 이건
         </div>
         <div style={tests}>
           ggg

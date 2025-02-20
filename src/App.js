@@ -23,7 +23,7 @@ function App() {
         실패야 이건
         </div>
         <div style={tests}>
-          ggg
+          
         </div>
       </div>
       <h4>{ posts }</h4>

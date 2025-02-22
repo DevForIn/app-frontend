@@ -1,6 +1,7 @@
+/* eslint-disable */
 
 // image import 
-import React, { useState }  from 'react';
+import React, { use, useState }  from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -15,7 +16,17 @@ function App() {
   let[title,chagneTitle] = useState(['사진','노래','영화']);
   let[date,chagneDate] = useState(['2024/02/22','2024/02/23','2024/02/23']);
   
+  let [따봉, 따봉변경] = useState(0);
 
+  function changeTitle(){
+    /* deep copy 필요 
+    / var newArray = 글제목; -> 값 공유 말고 값 복사 필요
+    / var newArray = [...글제목]; -> 서로 독립적인 값. 값 복사
+    */
+    var newArray = [...글제목];
+    newArray[0] = '여자 코트 추천';
+    글제목변경(newArray);
+  }
 
   return (
     <div className='App'>
@@ -23,7 +34,8 @@ function App() {
         <div>개발 Blog</div>
       </div>
       <div className='list'>
-          <h3>{글제목[0]}</h3>
+          <h3>{글제목[0]} <span onClick={ () => { 따봉변경(따봉+1) }}>👍</span> {따봉} </h3>
+          <button onClick= { () => { changeTitle() } }>Change</button>
           <p> 2월 23일 발행</p>
           <hr/>     
       </div>
@@ -37,7 +49,6 @@ function App() {
           <h4>{date[1]}</h4>
           <hr/>     
       </div>
-      v
       <div className='list'>
           <h2>{title[2]}</h2>
           <h4>{date[2]}</h4>

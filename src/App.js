@@ -1,9 +1,11 @@
 /* eslint-disable */
-
-// image import 
 import React, { use, useState }  from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+// image import 
 import logo from './logo.svg';
 import './App.css';
+import Home from "./pages/Home"
+import About from "./pages/About"
 
 function App() {
   // 변수 저장
@@ -61,6 +63,13 @@ function App() {
           <h4>{date[2]}</h4>
           <hr/>     
       </div>
+      <nav>
+        <Link to ='/'>Home</Link> |  <Link to ='about'>About</Link>
+      </nav>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/about' element={<About/>} />
+      </Routes>
     </div> 
   );
 

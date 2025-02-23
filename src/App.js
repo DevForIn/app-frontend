@@ -16,7 +16,7 @@ function App() {
   let[title,chagneTitle] = useState(['사진','노래','영화']);
   let[date,chagneDate] = useState(['2024/02/22','2024/02/23','2024/02/23']);
   
-  let [따봉, 따봉변경] = useState(0);
+  let [up, changeUp] = useState(0);
 
   function changeTitle(){
     /* deep copy 필요 
@@ -34,7 +34,7 @@ function App() {
         <div>개발 Blog</div>
       </div>
       <div className='list'>
-          <h3>{글제목[0]} <span onClick={ () => { 따봉변경(따봉+1) }}>👍</span> {따봉} </h3>
+          <h3>{글제목[0]} <span onClick={ () => { changeUp(up+1) }}>👍</span> {up} </h3>
           <button onClick= { () => { changeTitle() } }>Change</button>
           <p> 2월 23일 발행</p>
           <hr/>     

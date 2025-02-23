@@ -11,12 +11,13 @@ function App() {
   
   // state = [state 데이터, state 데이터 변경 함수]
   // 자주 바뀌는, 중요한 데이터는 state로 선언
-  let [글제목, 글제목변경] = useState(['남자 코트 추천', ' 강남 우동 맛집']);
+  let [글제목, 글제목변경] = useState(['남자 코트 추천', '여자 코트 추천']);
 
   let[title,chagneTitle] = useState(['사진','노래','영화']);
   let[date,chagneDate] = useState(['2024/02/22','2024/02/23','2024/02/23']);
   
-  let [따봉, 따봉변경] = useState(0);
+  let [up, addUp] = useState(0);
+  let [down, addDown] = useState(0);
 
   function changeTitle(){
     /* deep copy 필요 
@@ -24,8 +25,14 @@ function App() {
     / var newArray = [...글제목]; -> 서로 독립적인 값. 값 복사
     */
     var newArray = [...글제목];
-    newArray[0] = '여자 코트 추천';
+    var changeData = newArray[0];
+    newArray[0] = newArray[1];
+    newArray[1] = changeData;
+    
     글제목변경(newArray);
+
+    addUp(0);
+    addDown(0);
   }
 
   return (
@@ -34,7 +41,7 @@ function App() {
         <div>개발 Blog</div>
       </div>
       <div className='list'>
-          <h3>{글제목[0]} <span onClick={ () => { 따봉변경(따봉+1) }}>👍</span> {따봉} </h3>
+          <h3>{글제목[0]} <span onClick={ () => { addUp(up+1) }}>👍</span> {up} <span onClick={ () => { addDown(down+1) }}>👎</span> {down} </h3>
           <button onClick= { () => { changeTitle() } }>Change</button>
           <p> 2월 23일 발행</p>
           <hr/>     

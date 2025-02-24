@@ -75,33 +75,3 @@ function App() {
 
 }
 export default App;
-/*
-  let posts = '일찍 퇴근하기';
-  let tests = { color : 'blue', fontSize : '50px' } ;
-  let bn = 'black-nav';
-  function 함수(){
-    return 100
-  }
-  return (
-    
-    // React -> 데이터 바인딩이 쉬움
-    <div className="App">
-      <div className='black-nav'>
-        asf
-      </div>
-      <div className={ bn }>
-        <div style={ { color : 'red', fontSize : '30px' } }>s
-        실패야 이건
-        </div>
-        <div style={tests}>
-          
-        </div>
-      </div>
-      <h4>{ posts }</h4>
-      <h4>{ 함수() }</h4>
-      <img src ={ logo }/>
-    </div>
-  );
-
-}
-*/

@@ -26,7 +26,7 @@ const ChatApp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8090/api/v1/question",
+        "http://192.168.219.101:8090/api/v1/question",
         { q: question },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -78,7 +78,7 @@ const ChatApp = () => {
           <div className="loading-container">
             <div className="loading-spinner"></div>
           </div>
-        )}
+        )}햣 
       </div>
 
       {/* 입력창 */}

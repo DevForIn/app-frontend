@@ -29,7 +29,7 @@ const ChatApp = () => {
     setQuestion(""); // 입력란을 즉시 비움
 
     try {
-      const response = await axios.post("/api/v1/question",
+      const response = await axios.post("http://192.168.219.101:8090/api/v1/question",
         { q: question },
         {
           headers: { Authorization: `Bearer ${token}` },

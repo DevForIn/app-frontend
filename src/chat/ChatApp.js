@@ -78,7 +78,7 @@ const ChatApp = () => {
           <div className="loading-container">
             <div className="loading-spinner"></div>
           </div>
-        )}햣 
+        )}
       </div>
 
       {/* 입력창 */}

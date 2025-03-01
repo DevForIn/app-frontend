@@ -8,7 +8,7 @@ const ChatApp = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSend = async () => {
-    if (!question.trim() || loading) return; // 🚀 이미 실행 중이면 중복 실행 방지
+    if (!question.trim()) return;
 
     const token = localStorage.getItem("token");
 
@@ -17,11 +17,16 @@ const ChatApp = () => {
       return;
     }
 
+    if (loading) return; // 이미 요청 중이라면 함수 종료 (중복 요청 방지)
+
+    setLoading(true); // 로딩 상태 시작
+
+    // 1. 질문을 화면에 보여주기
     const newMessage = { type: "question", text: question };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-    setLoading(true);
-    setQuestion(""); // 🚀 입력 필드 초기화 (중복 실행 방지)
+    // 2. 전송 후 입력 필드 비우기 (이 부분을 맨 마지막에 처리)
+    setQuestion(""); // 입력란을 즉시 비움
 
     try {
       const response = await axios.post(
@@ -32,6 +37,7 @@ const ChatApp = () => {
         }
       );
 
+      // 3. AI의 답변을 메시지에 추가
       const answerMessage = { type: "answer", text: response.data.data };
       setMessages((prevMessages) => [...prevMessages, answerMessage]);
     } catch (error) {
@@ -40,14 +46,14 @@ const ChatApp = () => {
         { type: "answer", text: "오류 발생! 다시 시도해 주세요." },
       ]);
     } finally {
-      setLoading(false);
+      setLoading(false); // 로딩 상태 종료
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !loading) { // 🚀 로딩 중이면 Enter 이벤트 실행 안 함
-      e.preventDefault();
-      handleSend();
+    if (e.key === "Enter") {
+      e.preventDefault(); // Enter 키 기본 동작 방지 (줄 바꿈 방지)
+      handleSend(); // 질문 전송
     }
   };
 
@@ -79,12 +85,14 @@ const ChatApp = () => {
 
       <div className="input-area">
         <textarea
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          onKeyDown={handleKeyDown} // 🚀 Enter 중복 입력 방지
+          value={question} // 입력된 텍스트
+          onChange={(e) => setQuestion(e.target.value)} // 상태 업데이트
+          onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
           placeholder="질문을 입력해라냥 ~"
         />
-        <button onClick={handleSend} disabled={loading}>보내기</button>
+        <button onClick={handleSend} disabled={loading}>
+          보내기
+        </button>
       </div>
     </div>
   );

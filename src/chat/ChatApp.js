@@ -8,7 +8,7 @@ const ChatApp = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSend = async () => {
-    if (!question.trim()) return;
+    if (!question.trim() || loading) return; // 🚀 이미 실행 중이면 중복 실행 방지
 
     const token = localStorage.getItem("token");
 
@@ -17,12 +17,11 @@ const ChatApp = () => {
       return;
     }
 
-    // 1. 질문 추가 (보내기 전에 화면에 나타날 수 있도록)
     const newMessage = { type: "question", text: question };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     setLoading(true);
-    setQuestion(""); // 질문 입력란 초기화
+    setQuestion(""); // 🚀 입력 필드 초기화 (중복 실행 방지)
 
     try {
       const response = await axios.post(
@@ -33,7 +32,6 @@ const ChatApp = () => {
         }
       );
 
-      // 2. AI의 답변 추가 (로딩 끝난 후)
       const answerMessage = { type: "answer", text: response.data.data };
       setMessages((prevMessages) => [...prevMessages, answerMessage]);
     } catch (error) {
@@ -47,8 +45,8 @@ const ChatApp = () => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // Enter 키 기본 동작 방지 (줄 바꿈 방지)
+    if (e.key === "Enter" && !loading) { // 🚀 로딩 중이면 Enter 이벤트 실행 안 함
+      e.preventDefault();
       handleSend();
     }
   };
@@ -58,7 +56,6 @@ const ChatApp = () => {
       <h1 className="chat-title">🐱 Roo AI Chat!</h1>
 
       <div className="chat-box">
-        {/* 메시지들이 쌓이는 영역 */}
         <div className="messages">
           {messages.map((message, index) => (
             <div
@@ -73,7 +70,6 @@ const ChatApp = () => {
           ))}
         </div>
 
-        {/* 로딩 중 회전하는 원 표시 */}
         {loading && (
           <div className="loading-container">
             <div className="loading-spinner"></div>
@@ -81,15 +77,14 @@ const ChatApp = () => {
         )}
       </div>
 
-      {/* 입력창 */}
       <div className="input-area">
         <textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
+          onKeyDown={handleKeyDown} // 🚀 Enter 중복 입력 방지
           placeholder="질문을 입력해라냥 ~"
         />
-        <button onClick={handleSend}>보내기</button>
+        <button onClick={handleSend} disabled={loading}>보내기</button>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("/auth/login", {
+      const response = await axios.post("/roo/auth/login", {
         id,
         password,
       });

@@ -30,7 +30,7 @@ const ChatApp = () => {
     setQuestion("");
 
     try {
-      const response = await axios.post("/api/users",
+      const response = await axios.post("/roo/api/v1/question",
         { q: question },
         {
           headers: { Authorization: `Bearer ${token}` },

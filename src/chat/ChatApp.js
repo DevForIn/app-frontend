@@ -1,41 +1,47 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 import "./ChatApp.css";
 
 const ChatApp = () => {
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  // 환경 변수에서 API 주소 가져옴
+  const API_BASE_URL = process.env.REACT_APP_API_URL; 
 
   const handleSend = async () => {
     if (!question.trim()) return;
-
+  
     const token = localStorage.getItem("token");
-
+  
     if (!token) {
       alert("로그인이 필요합니다!");
-      return;
+      navigate("/login");  // 
+      return;  // 로그인 안 된 경우, 함수 종료
     }
-
+  
     if (loading) return; // 이미 요청 중이라면 함수 종료 (중복 요청 방지)
-
+  
     setLoading(true); // 로딩 상태 시작
-
+  
     // 1. 질문을 화면에 보여주기
     const newMessage = { type: "question", text: question };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
-
+  
     // 2. 전송 후 입력 필드 비우기 (이 부분을 맨 마지막에 처리)
     setQuestion(""); // 입력란을 즉시 비움
-
+  
     try {
-      const response = await axios.post("http://192.168.219.101:8090/api/v1/question",
+      const response = await axios.post(
+        `${API_BASE_URL}/api/v1/question`,
         { q: question },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+  
       // 3. AI의 답변을 메시지에 추가
       const answerMessage = { type: "answer", text: response.data.data };
       setMessages((prevMessages) => [...prevMessages, answerMessage]);
@@ -48,13 +54,16 @@ const ChatApp = () => {
       setLoading(false); // 로딩 상태 종료
     }
   };
-
+  
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Enter 키 기본 동작 방지 (줄 바꿈 방지)
       handleSend(); // 질문 전송
     }
   };
+  
+  
+  
 
   return (
     <div className="chat-container">

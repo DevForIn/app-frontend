@@ -6,11 +6,13 @@ const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지를 관리할 상태 추가
+    // 환경 변수에서 API 주소 가져옴
+    const API_BASE_URL = process.env.REACT_APP_API_URL; 
   
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://192.168.219.101:8090/auth/login", {
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
         id,
         password,
       });

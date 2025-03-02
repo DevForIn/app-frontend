@@ -8,41 +8,35 @@ const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // 환경 변수에서 API 주소 가져옴
-  const API_BASE_URL = process.env.REACT_APP_API_URL; 
 
   const handleSend = async () => {
     if (!question.trim()) return;
-  
+
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       alert("로그인이 필요합니다!");
-      navigate("/login");  // 
-      return;  // 로그인 안 된 경우, 함수 종료
+      navigate("/login");
+      return;
     }
-  
-    if (loading) return; // 이미 요청 중이라면 함수 종료 (중복 요청 방지)
-  
-    setLoading(true); // 로딩 상태 시작
-  
-    // 1. 질문을 화면에 보여주기
+
+    if (loading) return;
+
+    setLoading(true);
+
     const newMessage = { type: "question", text: question };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
-  
-    // 2. 전송 후 입력 필드 비우기 (이 부분을 맨 마지막에 처리)
-    setQuestion(""); // 입력란을 즉시 비움
-  
+
+    setQuestion("");
+
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/api/v1/question`,
+      const response = await axios.post("/api/users",
         { q: question },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
-      // 3. AI의 답변을 메시지에 추가
+
       const answerMessage = { type: "answer", text: response.data.data };
       setMessages((prevMessages) => [...prevMessages, answerMessage]);
     } catch (error) {
@@ -51,23 +45,28 @@ const ChatApp = () => {
         { type: "answer", text: "오류 발생! 다시 시도해 주세요." },
       ]);
     } finally {
-      setLoading(false); // 로딩 상태 종료
+      setLoading(false);
     }
   };
-  
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Enter 키 기본 동작 방지 (줄 바꿈 방지)
-      handleSend(); // 질문 전송
+      e.preventDefault();
+      handleSend();
     }
   };
-  
-  
-  
+
+  // 뒤로가기 버튼 클릭 시 대시보드로 이동
+  const handleBack = () => {
+    navigate("/dashboard"); // 대시보드로 이동
+  };
 
   return (
     <div className="chat-container">
       <h1 className="chat-title">🐱 Roo AI Chat!</h1>
+
+      {/* 뒤로가기 버튼 */}
+      <button onClick={handleBack} className="back-btn"><h3>◀︎</h3></button>
 
       <div className="chat-box">
         <div className="messages">
@@ -93,9 +92,9 @@ const ChatApp = () => {
 
       <div className="input-area">
         <textarea
-          value={question} // 입력된 텍스트
-          onChange={(e) => setQuestion(e.target.value)} // 상태 업데이트
-          onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="질문을 입력해라냥 ~"
         />
         <button onClick={handleSend} disabled={loading}>

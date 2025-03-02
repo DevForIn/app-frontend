@@ -3,11 +3,13 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';  // Router 관련 import
 import ChatApp from './chat/ChatApp';
 import Login from './auth/Login';
+import Dashboard from "./dashboard/Dashboard";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/chat" element={<ChatApp />} />
     </Routes>
   );

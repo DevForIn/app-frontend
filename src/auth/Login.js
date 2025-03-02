@@ -6,13 +6,10 @@ const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지를 관리할 상태 추가
-    // 환경 변수에서 API 주소 가져옴
-    const API_BASE_URL = process.env.REACT_APP_API_URL; 
-  
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+      const response = await axios.post("/auth/login", {
         id,
         password,
       });
@@ -22,8 +19,8 @@ const Login = () => {
         const token = response.data.data.token;
         localStorage.setItem("token", token); // 토큰 저장
         alert("로그인 성공!");
-        // 로그인 후 채팅 페이지로 이동
-        window.location.href = "/chat"; // 예시로 '/chat' 페이지로 이동
+        // 로그인 후 대시보드 페이지로 이동
+        window.location.href = "/dashboard"; // '/dashboard' 페이지로 이동
       } else {
         setErrorMessage("로그인 정보가 잘못되었습니다.");
       }
@@ -32,36 +29,45 @@ const Login = () => {
     }
   };
 
+  // 엔터 키를 눌렀을 때 로그인 처리
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // 기본 Enter 동작 방지 (폼 제출 방지)
+      handleLogin(); // 로그인 함수 호출
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>로그인</h2>
+        <h2>JeongIn's World !</h2>
         {errorMessage && <p className="error-message">{errorMessage}</p>} {/* 에러 메시지 표시 */}
         <div className="input-group">
-          <label htmlFor="id">아이디</label>
+          <label htmlFor="id">ID</label>
           <input
             type="text"
             id="id"
-            placeholder="아이디 입력"
+            placeholder="Enter ID"
             value={id}
             onChange={(e) => setId(e.target.value)}
+            onKeyDown={handleKeyDown}  // Enter 키 이벤트 처리
           />
         </div>
         <div className="input-group">
-          <label htmlFor="password">비밀번호</label>
+          <label htmlFor="password">PW</label>
           <input
             type="password"
             id="password"
-            placeholder="비밀번호 입력"
+            placeholder="Enter PW"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}  // Enter 키 이벤트 처리
           />
         </div>
-        <button onClick={handleLogin} className="login-btn">로그인</button>
+        <button onClick={handleLogin} className="login-btn">Sign In</button>
       </div>
     </div>
   );
 };
-
 
 export default Login;

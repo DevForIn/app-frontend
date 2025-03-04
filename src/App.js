@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';  // Router 관련 import
 import ChatApp from './chat/ChatApp';
 import Login from './auth/Login';
-import Dashboard from "./dashboard/Dashboard";
+import Dashboard from './dashboard/Dashboard';
 
 function App() {
   return (

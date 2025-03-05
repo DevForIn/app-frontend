@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';  // Router 관련 import
 import ChatApp from './chat/ChatApp';
 import Login from './auth/Login';
 import Dashboard from './dashboard/Dashboard';
-
+// 
 function App() {
   return (
     <Routes>
@@ -15,9 +15,7 @@ function App() {
   );
 }
 
-export default App;
-
-
+export default App;ㄴ
 
 
 // import React, { use, useState }  from 'react';
@@ -70,7 +68,7 @@ export default App;
 //           <hr/>     
 //       </div>
 //       <div className='list'>
-//           <h2>{title[0]}</h2>
+//           <h2>{title[0]}</h2>ㄴ
 //           <h4>{date[0]}</h4>
 //           <hr/>     
 //       </div>
